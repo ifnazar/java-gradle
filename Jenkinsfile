@@ -32,9 +32,8 @@ node {
 		checkout scm
 	}
 	stage('Setup') {
-		    def jenkinsFileKey = "${env.GRADLE_CUSTOM_ADDITIONAL_COMMANDS}"
-		    configFileProvider([configFile(fileId: jenkinsFileKey, variable: 'CUSTOM_ADDITIONAL_COMMANDS_FILE')]) {
-		        appendExtraCommand("build.gradle", "${env.CUSTOM_ADDITIONAL_COMMANDS_FILE}") ;
+		    def customAdditionalCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
+		    appendExtraCommand("build.gradle", customAdditionalCommands) ;
 		    }
 		gradlew 'clean'
 	}
