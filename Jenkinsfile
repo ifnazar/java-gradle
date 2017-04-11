@@ -13,13 +13,12 @@ def gradlew(args)
 		bat "gradlew " + args
 }
 
-def appendExtraCommand(fileName, additionalCommandFile) {
+def appendExtraCommand(fileName, additionalCommand) {
     def value = '';
     if (fileExists(fileName)) {
         value = readFile(fileName);
     }
 
-    def additionalCommand = readFile(additionalCommandFile);
     value += '\n\n'+ additionalCommand;
 
     writeFile file: fileName, text: value
