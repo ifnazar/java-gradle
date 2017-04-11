@@ -13,6 +13,18 @@ def gradlew(args)
 		bat "gradlew " + args
 }
 
+def appendExtraCommand(fileName, additionalCommandFile) {
+    def value = '';
+    if (fileExists(fileName)) {
+        value = readFile(fileName);
+    }
+
+    def additionalCommand = readFile(additionalCommandFile);
+    value += '\n\n'+ additionalCommand;
+
+    writeFile file: fileName, text: value
+}
+
 node {
     
     try {
@@ -20,11 +32,10 @@ node {
 		checkout scm
 	}
 	stage('Setup') {
-		    configFileProvider([configFile(fileId: '5c4c550f-ebaf-45fb-8456-3a60cb6bf296', variable: 'custom_gradle_file')]) {
-		        sh "echo '\n' >> build.gradle"
-		        sh "cat ${env.custom_gradle_file} >> build.gradle"
-		        sh "cat build.gradle"
-		    }   
+		    def jenkinsFileKey = "${env.GRADLE_CUSTOM_ADDITIONAL_COMMANDS}"
+		    configFileProvider([configFile(fileId: jenkinsFileKey, variable: 'CUSTOM_ADDITIONAL_COMMANDS_FILE')]) {
+		        appendExtraCommand("build.gradle", "${env.CUSTOM_ADDITIONAL_COMMANDS_FILE}") ;
+		    }
 		gradlew 'clean'
 	}
 	stage('Build') {
