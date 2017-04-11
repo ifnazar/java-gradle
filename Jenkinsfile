@@ -44,6 +44,9 @@ node {
 		} finally {
 			
 		}
+		stage('Sonar') {
+			gradlew "sonarqube -Dsonar.buildbreaker.queryMaxAttempts=90 -Dsonar.buildbreaker.skip=true -Dsonar.host.url=http://10.42.11.93:9000"
+		}
 	}
     }
     finally {
