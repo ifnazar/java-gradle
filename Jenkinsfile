@@ -32,9 +32,8 @@ node {
 		checkout scm
 	}
 	stage('Setup') {
-		    def customAdditionalCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
-		    appendExtraCommand("build.gradle", customAdditionalCommands) ;
-		    }
+		def customAdditionalCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
+		appendExtraCommand("build.gradle", customAdditionalCommands) ;
 		gradlew 'clean'
 	}
 	stage('Build') {
