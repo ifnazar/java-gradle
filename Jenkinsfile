@@ -13,15 +13,11 @@ def gradlew(args)
 		bat "gradlew " + args
 }
 
-def appendExtraCommand(fileName, additionalCommand) {
-    def value = '';
-    if (fileExists(fileName)) {
-        value = readFile(fileName);
-    }
-
-    value += '\n\n'+ additionalCommand;
-
-    writeFile file: fileName, text: value
+@NonCPS
+def appendAdditionalCommand(fileName, additionalCustomCommands) {
+	def file = new File(fileName)
+	f.append('\n\n')
+	f.append(additionalCustomCommands)
 }
 
 node {
@@ -31,8 +27,8 @@ node {
 		checkout scm
 	}
 	stage('Setup') {
-		def customAdditionalCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
-		appendExtraCommand("build.gradle", customAdditionalCommands) ;
+		def additionalCustomCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
+		appendAdditionalCommand("build.gradle", additionalCustomCommands) ;
 		gradlew 'clean'
 	}
 	stage('Build') {
