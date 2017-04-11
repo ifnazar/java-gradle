@@ -42,7 +42,7 @@ node {
 			onError()
 			throw exc
 		} finally {
-			junit '**/build/test-results/test/*.xml'
+			
 		}
 	}
     }
