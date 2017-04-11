@@ -16,8 +16,8 @@ def gradlew(args)
 @NonCPS
 def appendAdditionalCommand(fileName, additionalCustomCommands) {
 	def file = new File(fileName)
-	f.append('\n\n')
-	f.append(additionalCustomCommands)
+	file.append('\n\n')
+	file.append(additionalCustomCommands)
 }
 
 node {
