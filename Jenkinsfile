@@ -1,5 +1,18 @@
 #!groovy
 
+import groovy.json.JsonSlurper
+
+properties([disableConcurrentBuilds()])
+
+@NonCPS
+def gradlew(args)
+{
+	if (isUnix())
+		sh "./gradlew " + args
+	else
+		bat "gradlew " + args
+}
+
 node {
     
     try {
