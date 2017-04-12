@@ -16,14 +16,13 @@ def gradlew(args)
 		bat "gradlew " + args
 }
 
-@NonCPS
-def appendAdditionalCommand(fileName, additionalCustomCommands) {
+def appendAdditionalCommand(fileName, additionalCommand) {
     def value = '';
     if (fileExists(fileName)) {
         value = readFile(fileName);
     }
-    value += '\n\n'+ additionalCustomCommands;
-    writeFile file: fileName, text: value	
+    value += '\n\n'+ additionalCommand;
+    writeFile file: fileName, text: value
 }
 
 node {
