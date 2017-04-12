@@ -32,8 +32,8 @@ sonarqube {
 
 	def filesExcludedFromAnalysis = generated.join(",")
 	properties {
-		property "sonar.projectName", "${rootProject.name}"
-		property "sonar.projectKey", "${rootProject.name}"
+		property "sonar.projectName", "#{sonar.projectName}"
+		property "sonar.projectKey", "#{sonar.projectKey}"
 		property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/test.exec"
 		property "sonar.jacoco.reportMissing.force.zero", "true"
 		property "sonar.coverage.exclusions", filesExcludedFromAnalysis

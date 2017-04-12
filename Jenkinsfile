@@ -4,6 +4,9 @@ import groovy.json.JsonSlurper
 
 properties([disableConcurrentBuilds()])
 
+def projectName = "xx_projectName"
+def projectKey  = "xx_projectKey"
+
 @NonCPS
 def gradlew(args)
 {
@@ -27,7 +30,12 @@ node {
 		checkout scm
 	}
 	stage('Setup') {
-		def additionalCustomCommands = new URL("https://raw.githubusercontent.com/ifnazar/java-gradle/master/custom.gradle").getText();
+
+		def url = "${env.URL_GRADLE_ADDITIONAL_CUSTOM_COMMANDS}";
+		def additionalCustomCommands = new URL(url).getText();
+		additionalCustomCommands = additionalCustomCommands.replaceAll( '#{sonar.projectName}', "${projectName}" )
+		additionalCustomCommands = additionalCustomCommands.replaceAll( '#{sonar.projectKey}', "${projectKey}" )
+
 		appendAdditionalCommand("build.gradle", additionalCustomCommands) ;
 		gradlew 'clean'
 	}
