@@ -18,9 +18,12 @@ def gradlew(args)
 
 @NonCPS
 def appendAdditionalCommand(fileName, additionalCustomCommands) {
-	def file = new File(fileName)
-	file.append('\n\n')
-	file.append(additionalCustomCommands)
+    def value = '';
+    if (fileExists(fileName)) {
+        value = readFile(fileName);
+    }
+    value += '\n\n'+ additionalCustomCommands;
+    writeFile file: fileName, text: value	
 }
 
 node {
