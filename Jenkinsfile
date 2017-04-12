@@ -33,8 +33,8 @@ node {
 
 		def url = "${env.URL_GRADLE_ADDITIONAL_CUSTOM_COMMANDS}";
 		def additionalCustomCommands = new URL(url).getText();
-		additionalCustomCommands = additionalCustomCommands.replaceAll( '#{sonar.projectName}', "${projectName}" )
-		additionalCustomCommands = additionalCustomCommands.replaceAll( '#{sonar.projectKey}', "${projectKey}" )
+		additionalCustomCommands = additionalCustomCommands.replaceAll( '##sonar.projectName##', "${projectName}" )
+		additionalCustomCommands = additionalCustomCommands.replaceAll( '##sonar.projectKey##', "${projectKey}" )
 
 		appendAdditionalCommand("build.gradle", additionalCustomCommands) ;
 		gradlew 'clean'
